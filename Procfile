@@ -1,0 +1,1 @@
+web: gunicorn RoomManagementSystem.wsgi --log-file -
