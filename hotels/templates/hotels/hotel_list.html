@@ -1,0 +1,12 @@
+<h1>Hotels List</h1>
+{% if hotels_list %}
+<ul>
+{% for hotel in hotels_list %}
+    <li>
+    <a href="{{ hotel.get_absolute_url }}">{{ hotel.name }}</a> - {{hotel.location}}
+    </li>
+{% endfor %}
+</ul>
+{% else %}
+<p>There are no hotels.</p>
+{% endif %}   

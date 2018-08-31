@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from .views import HotelList, HotelDetail
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('hotels/', include('hotels.urls')),
+    path('', HotelList.as_view(), name='hotel-list'),
+    path('<int:pk>', HotelDetail.as_view(), name='hotel-detail'),
 ]

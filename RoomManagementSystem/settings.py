@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['room-booking-system-proj.herokuapp.com', 'localhost', '127.0.0
 # Application definition
 
 INSTALLED_APPS = [
+    'hotels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
