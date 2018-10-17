@@ -1,4 +1,4 @@
-"""RoomManagementSystem URL Configuration
+"""Accounts URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/2.1/topics/http/urls/
@@ -15,12 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import HotelList, HotelDetail, search
+from django.contrib.auth.views import LoginView,LogoutView
+from .views import SignUpView, ManagerSignUpView, CustomerSignUpView
+from django.views.generic import TemplateView
 
-app_name = "hotels"
-
+app_name = "accounts"
 urlpatterns = [
-    path('', HotelList.as_view(), name='hotel-list'),
-    path('<int:pk>', HotelDetail.as_view(), name='hotel-detail'),
-    path('search/', search, name='search'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('signup/', SignUpView.as_view(), name='signup'),
+    path('signup/manager/', ManagerSignUpView.as_view(), name='manager_signup'),
+    path('signup/customer/', CustomerSignUpView.as_view(), name='customer_signup'),
 ]

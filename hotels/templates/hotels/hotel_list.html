@@ -1,3 +1,7 @@
+{% extends 'hotels/base.html' %}
+{% block title %}Hotel Details{% endblock %}
+{% block body %}
+
 <h1>Hotels List</h1>
 {% if hotels_list %}
 <ul>
@@ -10,3 +14,5 @@
 {% else %}
 <p>There are no hotels.</p>
 {% endif %}   
+
+{% endblock %}

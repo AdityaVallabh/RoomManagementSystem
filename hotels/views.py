@@ -5,6 +5,16 @@ from .models import Hotel
 
 # Create your views here.
 
+def search(request):
+    locations = Hotel.objects.all().values_list('location', flat=True).distinct()
+    if not request.GET.get('location', 'none') == 'none':
+        location = request.GET['location']
+        hotels = Hotel.objects.filter(location=location)
+
+        return render(request, 'hotels/search.html', {'hotels': hotels, 'locations': locations, 'location': location})
+
+    return render(request, 'hotels/search.html', {'locations': locations})
+
 class HotelList(ListView):
     model = Hotel
     context_object_name = 'hotels_list'
@@ -13,3 +23,5 @@ class HotelList(ListView):
 class HotelDetail(DetailView):
     model = Hotel
     template_name='hotels/hotel_detail.html'
+
+

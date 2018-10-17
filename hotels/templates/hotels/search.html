@@ -1,0 +1,91 @@
+{% extends 'hotels/base.html' %}
+{% block title %}Search{% endblock %}
+{% load staticfiles %}
+{% block body %}
+<p>
+  <div >
+    <div class="panel-body">
+      <center><h2 style="color: #F96; display: block; font-size: 30px;font-weight: 400;">Search<h2><br /></center>
+      <form class="search-container" action="" method="GET" enctype="multipart/form-data">
+        <div>
+          <select name="location" class="form-control" type="text" id="search-bar" required>
+            <option value="" selected="selected">Location</option>
+            {% for location in locations %}
+              <option value="{{ location }}">{{ location }}</option>
+            {% endfor %}
+          </select>
+          <br />
+          <div class="form-group">
+            <center><button class="button-three">Search</button></center>
+          </div>
+        </div>
+      </form>
+    </div>
+    
+    {% if hotels %}
+    <div class="container" style="background-color:lightgoldenrodyellow;opacity:0.95;">
+      <ul id="results">
+        {% for hotel in hotels %}
+        <li>
+          <!-- <div class="list-left" style="font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;">
+                <h3 style="font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;">Hotel Name: </h3><br />
+                <h3 style="font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;"">Contact Number: </h3><br />
+                <h3 style="font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;">Email: </h3><br />
+                <h3 style="font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;">Rating: </h3>
+          </div>
+          <div class="list-right">
+                <h2 style="font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;">{{ hotel.name }}</h2><br />
+            <br /><h3 style="font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;">{{ hotel.contact }}</h3><br />
+            <br /><h3 style="font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;">{{ hotel.email }}</h3><br />
+            <h3 style="font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;">₹{{ hotel.amount }}</h3><br />
+            </div> -->
+            <div class="book-module">
+              <div class="inner">
+            
+                <div class="top">
+                  <div class="inner">
+            
+            
+                    <div class="logo-container">
+                      <h3>{{ hotel.name }}</h3>
+                      <p>{{ location }}</p>
+                      <button class="btn">Book</button>
+                    </div>
+            
+                  </div>
+                </div>
+            
+            
+                <div class="bottom">
+                  <div class="inner">
+                    <div class="localAndHours">
+                      <div>
+                        <span class="floatL"><i class="size fa fa-phone" aria-hidden="true"></i></span>
+                        <span class="floatR">{{ hotel.contact }}</br> </span>
+                      </div>
+            
+                      <div>
+                        <span class="floatL"><i class="size fa fa-envelope" aria-hidden="true"></i></span>
+                        <span class="floatR">{{ hotel.email }}</br> </span>
+                      </div>
+            
+            
+                    </div>
+            
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <hr>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      
+    </div>
+  </div>
+  
+</p>
+{% endblock %}
