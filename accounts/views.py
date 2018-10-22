@@ -1,13 +1,14 @@
 from django.contrib.auth import login
 from django.shortcuts import redirect
 from django.views.generic import CreateView
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView 
+from django.views.generic.detail import DetailView
 from django.db import transaction
 from django.core.mail import EmailMessage
-
+from django.contrib.auth.models import Group
 from .forms import ManagerSignUpForm, CustomerSignUpForm
 from .models import User
-from .emails import MANAGER_JOIN_EMAIL
+from RoomManagementSystem.emails import MANAGER_JOIN_EMAIL
 
 class index(TemplateView):
     template_name= 'registration/homepage.html'
@@ -27,17 +28,19 @@ class ManagerSignUpView(CreateView):
     @transaction.atomic
     def form_valid(self, form):
         user = form.save()
-        user.is_active = False
-        # login(self.request, user)
+        # is_staff be default for dev purpose
+        user.is_staff = True
+        user.groups.add(Group.objects.get(name='Manager Permissions'))
+        login(self.request, user)
         admin_email = User.objects.get(pk=1).email
         subject = "[YOYO] New Manager - %s" % user.username
         body = MANAGER_JOIN_EMAIL % (user.username, user.manager.hotel)
-        # try:
-        email = EmailMessage(subject, body, to=[admin_email])
-        email.send()
+        try:
+            email = EmailMessage(subject, body, to=[admin_email])
+            email.send()
+        except Exception as e:
+            print("Unable to send email to (%s)\n%s" % (admin_email, e))
         user.save()
-        # except:
-            # print("Unable to send email (%s)" % admin_email)
         return redirect('hotels:hotel-list')
 
 class CustomerSignUpView(CreateView):
@@ -54,3 +57,7 @@ class CustomerSignUpView(CreateView):
         user = form.save()
         login(self.request, user)
         return redirect('hotels:hotel-list')
+
+class UserDetail(DetailView):
+    model = User
+    template_name = 'registration/userprofile.html'

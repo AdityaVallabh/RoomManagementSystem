@@ -1,0 +1,50 @@
+{% extends 'hotels/base.html' %}
+{% block title %}Booking Details{% endblock %}
+{% block body %}
+        {% if request.user.is_superuser or booking.customer == request.user or booking.room.hotel == request.user.hotel %}
+            <!-- <div class="container" style="background-color: rgba(249, 249, 249, 0.835); opacity:1"> -->
+            <center><h1 style="color: #dd5;">Booking Details</h1>
+                <table class="rwd-table">
+                    <tr>
+                        <th>Booking ID</th>
+                        <td>{{ booking.pk }}</td>
+                    </tr>
+                    <tr>
+                        <th>To</th>
+                        <td>{{ booking.room.hotel.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Room Type</th>
+                            <td>{{ booking.room.type_name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Occupancy</th>
+                            <td>{{ booking.room.occupancy }}</td>
+                    </tr>
+                    <tr>
+                        <th>Room Type</th>
+                        <td>{{ booking.room.room_type }}</td>
+                    </tr>
+                    <tr>
+                        <th>Check-In</th>
+                        <td>{{ booking.begin_time }}</td>
+                    </tr>
+                    <tr>
+                        <th>Check-out</th>
+                        <td>{{ booking.end_time }}</td>
+                    </tr>
+                    <tr>
+                        <th>Amount</th>
+                        <td>{{ booking.amount }}</td>
+                    </tr>
+                    <tr>
+                        <th>Number of Rooms</th>
+                        <td>{{ booking.num_rooms }}</td>
+                    </tr>
+                </table>
+        {% else %}
+              </center>
+
+            <p>You are not authorized to view this page!</p>
+        {% endif %}
+{% endblock %}

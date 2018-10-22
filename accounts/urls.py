@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.views import LoginView,LogoutView
-from .views import SignUpView, ManagerSignUpView, CustomerSignUpView
+from .views import SignUpView, ManagerSignUpView, CustomerSignUpView ,UserDetail
 from django.views.generic import TemplateView
 
 app_name = "accounts"
@@ -26,4 +26,5 @@ urlpatterns = [
     path('signup/', SignUpView.as_view(), name='signup'),
     path('signup/manager/', ManagerSignUpView.as_view(), name='manager_signup'),
     path('signup/customer/', CustomerSignUpView.as_view(), name='customer_signup'),
+    path('profile/<int:pk>', UserDetail.as_view(), name='user-detail'),
 ]

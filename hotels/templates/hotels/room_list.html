@@ -1,0 +1,18 @@
+{% extends 'hotels/base.html' %}
+{% block title %}Room Details{% endblock %}
+{% block body %}
+
+<h1>Rooms List</h1>
+{% if rooms_list %}
+<ul>
+{% for room in rooms_list %}
+    <li>
+    <a href="{{ room.get_absolute_url }}">{{ room }}</a>
+    </li>
+{% endfor %}
+</ul>
+{% else %}
+<p>There are no rooms.</p>
+{% endif %}   
+
+{% endblock %}

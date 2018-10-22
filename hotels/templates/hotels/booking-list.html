@@ -1,0 +1,35 @@
+{% extends 'hotels/base.html' %}
+{% block body %}
+<center><h3 style="color: #dd5;">Your Bookings History</h3></center>
+<center><div>
+{% if bookings %}
+<table class="rwd-table">
+  <thead>
+      <th>ID</th>
+      <th>Hotel</th>
+      <th>Location</th>
+      <th>Checkin Time</th>
+      <th>CheckOut Time</th>
+      <th>Number of Roms</th>
+      <th>Amount</th>
+  </thead>
+  <tbody>
+      {% for booking in bookings %}
+      <tr onclick=window.location="{% url 'hotels:booking-detail' booking.pk %}">
+          <td>{{ booking.pk }}</td>
+          <td>{{ booking.room.hotel.name }}</td>
+          <td>{{ booking.room.hotel.location }}</td>
+          <td>{{ booking.begin_time }}</td>
+          <td>{{ booking.end_time }}</td>
+          <td>{{ booking.num_rooms }}</td>
+          <td>{{ booking.amount }}</td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<h3>You have no bookings!</h3>
+{% endif %}
+</table>
+</div></center>
+{% endblock %}

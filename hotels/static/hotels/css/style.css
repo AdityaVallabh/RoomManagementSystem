@@ -135,13 +135,13 @@ banner
     background-color: rgba(12, 184, 182) !important;
 }
 #banner{
-	background: url('../images/slide1-01.jpg') no-repeat fixed;
+    background: url('../images/slide1-01.jpg') no-repeat fixed;
 	background-size: cover;
 	min-height: 800px;
 	position: relative;
 }
 .bg-color{
-	background-color: RGBA(13, 70, 83, 0);
+	background-color: rgba(0, 0, 0, 0.6);
 	min-height: 800px;
 }
 .banner-info{

@@ -21,35 +21,22 @@
         </div>
       </form>
     </div>
-    
+  </div>
+  <div style="background-color:rgb(240, 192, 202);">
     {% if hotels %}
-    <div class="container" style="background-color:lightgoldenrodyellow;opacity:0.95;">
       <ul id="results">
         {% for hotel in hotels %}
         <li>
-          <!-- <div class="list-left" style="font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;">
-                <h3 style="font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;">Hotel Name: </h3><br />
-                <h3 style="font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;"">Contact Number: </h3><br />
-                <h3 style="font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;">Email: </h3><br />
-                <h3 style="font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;">Rating: </h3>
-          </div>
-          <div class="list-right">
-                <h2 style="font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;">{{ hotel.name }}</h2><br />
-            <br /><h3 style="font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;">{{ hotel.contact }}</h3><br />
-            <br /><h3 style="font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;">{{ hotel.email }}</h3><br />
-            <h3 style="font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;">₹{{ hotel.amount }}</h3><br />
-            </div> -->
             <div class="book-module">
               <div class="inner">
             
                 <div class="top">
                   <div class="inner">
             
-            
                     <div class="logo-container">
                       <h3>{{ hotel.name }}</h3>
                       <p>{{ location }}</p>
-                      <button class="btn">Book</button>
+                      <button class="btn" onclick="location.href='{% url 'hotels:room-list' hotel.id %}';">View Rooms</button>
                     </div>
             
                   </div>
@@ -61,15 +48,47 @@
                     <div class="localAndHours">
                       <div>
                         <span class="floatL"><i class="size fa fa-phone" aria-hidden="true"></i></span>
-                        <span class="floatR">{{ hotel.contact }}</br> </span>
+                        <span class="floatR">  {{ hotel.contact }}</br> </span>
                       </div>
             
                       <div>
                         <span class="floatL"><i class="size fa fa-envelope" aria-hidden="true"></i></span>
-                        <span class="floatR">{{ hotel.email }}</br> </span>
+                        <span class="floatR">  {{ hotel.email }}</br> </span>
                       </div>
-            
-            
+                      <br />
+                      <div>
+                        <span class="floatL"><i class="size fa fa-map-marker " aria-hidden="true"></i></span>
+                        <span class="floatR">  {{ hotel.address }}</br> </span>
+                      </div>
+                      <br />
+                      <div>
+                        <span class="floatL"><i class="size fa fa-star" aria-hidden="true"></i></span>
+                        <span class="floatR"><b>  Rating: <span id="stars{{ forloop.counter }}"></span></b></br> </span>
+                      </div>
+                      
+                      <script>
+                        document.getElementById("stars{{ forloop.counter }}").innerHTML = getStars("{{ hotel.rating }}");
+                          function getStars(rating) {
+
+                            // Round to nearest half
+                            rating = Math.round(rating * 2) / 2;
+                            let output = [];
+
+                            // Append all the filled whole stars
+                            for (var i = rating; i >= 1; i--)
+                              output.push('<i class="fa fa-star" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+
+                            // If there is a half a star, append it
+                            if (i == .5) output.push('<i class="fa fa-star-half-o" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+
+                            // Fill the empty stars
+                            for (let i = (5 - rating); i >= 1; i--)
+                              output.push('<i class="fa fa-star-o" aria-hidden="true" style="color: gold;"></i>&nbsp;');
+
+                            return output.join('');
+
+                          }
+                      </script>
                     </div>
             
                     
@@ -83,9 +102,6 @@
         </ul>
         {% endif %}
       </div>
-      
-    </div>
-  </div>
   
 </p>
 {% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'hotels/base.html' %}
+{% block title %}Search{% endblock %}
+{% load staticfiles %}
+{% block body %}
+<p>
+  <div >
+    <div class="panel-body">
+      <center><h2 style="color: #F96; display: block; font-size: 30px;font-weight: 400;">Booking<h2><br /></center>
+      <form class="search-container" action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+          {% if message %}
+              {{ message }}
+          {% endif %}
+          {% for field in form %}
+            <center><div class="form-group">
+                <label class="control-label col-sm-2" style="font-size:15px;color: #F96;	display: block;">{{ field.label_tag }}</label>
+                <div class="search-container">{{ field }}</div>
+            </div>
+            </center>
+          {% endfor %}
+          <center><div class="form-group">
+                <label class="control-label col-sm-2" style="font-size:15px;color: #F96;	display: block;">Price:</label>
+                <div class="search-container" id="id_price">{{ price }}</div>
+            </div>
+            </center>
+          <script type="text/javascript">
+            $(function () {
+                $('#id_begin_time').datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm:ss'
+                });
+                $('#id_end_time').datetimepicker({
+                    format: 'YYYY-MM-DD HH:mm:ss',
+                    useCurrent: false
+                });
+                $("#id_begin_time").on("dp.change", function (e) {
+                    $('#id_end_time').data("DateTimePicker").minDate(e.date);
+                });
+                $("#id_end_time").on("dp.change", function (e) {
+                    $('#id_begin_time').data("DateTimePicker").maxDate(e.date);
+                });
+            });
+        </script>
+        <div class="form-group">
+            <center><button class="button-three" onclick="confirm_appointment(event)">Book</button></center>
+            <script>
+              function confirm_appointment(e) {
+                var amount = $("#id_num_rooms").val() * {{ price }};
+                console.log(amount);
+                msg = "Are you sure you want to book " + $("#id_num_rooms").val() + " rooms for Rs." + amount;// $("#id_room option:selected").text();
+                if(!confirm(msg)) {
+                    e.preventDefault();
+                }
+              }
+            </script>
+        </div>
+          <br />
+        </div>
+      </form>
+    </div>
+</p>
+{% endblock %}

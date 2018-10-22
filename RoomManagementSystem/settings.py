@@ -35,6 +35,8 @@ ALLOWED_HOSTS = ['room-booking-system-proj.herokuapp.com', 'localhost', '127.0.0
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
+
+
 INSTALLED_APPS = [
     'accounts',
     'hotels',
@@ -153,3 +155,4 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = config('EMAIL', default=EMAIL)
 EMAIL_HOST_PASSWORD = config('PASSWORD', default=PASSWORD)
 EMAIL_PORT = 587
+EMAIL_TIMEOUT = 10

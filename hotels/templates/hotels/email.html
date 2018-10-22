@@ -1,0 +1,22 @@
+{% extends 'hotels/base.html' %}
+{% block title %}Search{% endblock %}
+{% load staticfiles %}
+{% block body %}
+
+
+{% if success is True %}
+<center><h3>Mail Sent Successfully</h3></center>
+{% endif %}
+{% if not success %}
+<h1>Didn't find your hotel?Ask admin to add it.</h1><br /><br />
+<h2>Contact Us</h2>
+<form method="post">
+    {% csrf_token %}
+    {% load crispy_forms_tags %}
+    {{ form|crispy }}
+    <div class="form-actions">
+      <center><button type="submit" class="button-three">Send Mail</button></center>
+    </div>
+</form>
+{% endif %}
+{% endblock %}

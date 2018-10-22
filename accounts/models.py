@@ -1,9 +1,12 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-
+import datetime
+from django.utils import timezone
 # Create your models here.
 
 class User(AbstractUser):
+    contact = models.IntegerField(default = 1234567890)
+    birth_date = models.DateField(default = timezone.now)
     is_manager = models.BooleanField(default=False)
     is_customer = models.BooleanField(default=False)
 
