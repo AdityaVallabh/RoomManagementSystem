@@ -446,7 +446,6 @@ input[type="date" i] {
   top: 0;
   left: 0;
   z-index: 100;
-  border-top: 5px solid #ec1d25;
 }
 
 .wrap_header {

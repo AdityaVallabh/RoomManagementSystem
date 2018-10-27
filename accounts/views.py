@@ -34,7 +34,7 @@ class ManagerSignUpView(CreateView):
         login(self.request, user)
         admin_email = User.objects.get(pk=1).email
         subject = "[YOYO] New Manager - %s" % user.username
-        body = MANAGER_JOIN_EMAIL % (user.username, user.manager.hotel)
+        body = MANAGER_JOIN_EMAIL % (user.manager.hotel, user.username)
         try:
             email = EmailMessage(subject, body, to=[admin_email])
             email.send()

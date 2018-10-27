@@ -1,35 +1,57 @@
 {% extends 'hotels/base.html' %}
+{% block title %}Booking List{% endblock %}
 {% block body %}
-<center><h3 style="color: #dd5;">Your Bookings History</h3></center>
-<center><div>
-{% if bookings %}
-<table class="rwd-table">
-  <thead>
-      <th>ID</th>
-      <th>Hotel</th>
-      <th>Location</th>
-      <th>Checkin Time</th>
-      <th>CheckOut Time</th>
-      <th>Number of Roms</th>
-      <th>Amount</th>
-  </thead>
-  <tbody>
-      {% for booking in bookings %}
-      <tr onclick=window.location="{% url 'hotels:booking-detail' booking.pk %}">
-          <td>{{ booking.pk }}</td>
-          <td>{{ booking.room.hotel.name }}</td>
-          <td>{{ booking.room.hotel.location }}</td>
-          <td>{{ booking.begin_time }}</td>
-          <td>{{ booking.end_time }}</td>
-          <td>{{ booking.num_rooms }}</td>
-          <td>{{ booking.amount }}</td>
-      </tr>
-      {% endfor %}
-  </tbody>
-</table>
-{% else %}
-<h3>You have no bookings!</h3>
-{% endif %}
-</table>
-</div></center>
+
+<div class="col-md-9-6 ">
+        <h1 class="theme-account-page-title" style="color: #dd5;">Booking History</h1>
+        <div class="theme-account-history">
+         {% if bookings %} 
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Hotel</th>
+                <th>Location</th>
+                <th>Checkin Time</th>
+                <th>CheckOut Time</th>
+                <th>Number of Roms</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+                    {% for booking in bookings %}
+                    <tr onclick=window.location="{% url 'hotels:booking-detail' booking.pk %}">
+                
+                <td>
+                  <p class="theme-account-history-type-title">{{ booking.pk }}</p>
+                </td>
+                
+                <td>
+                        <p class="theme-account-history-type-title">{{ booking.room.hotel.name }}</p>
+                </td>
+                <td>
+                        <p class="theme-account-history-type-title">{{ booking.room.hotel.location }}</p>
+                </td>
+                <td>
+                        <p class="theme-account-history-type-title">{{ booking.begin_time }}</p>
+                </td>
+                <td>
+                        <p class="theme-account-history-type-title">{{ booking.end_time }}</p>
+                </td>
+                <td>
+                        <p class="theme-account-history-type-title">{{ booking.num_rooms }}</p>
+               </td>
+               <td>
+                    <p class="theme-account-history-type-title">{{ booking.amount }}</p>
+               </td>
+              
+              </tr>
+              {% endfor %}
+          </tbody>
+          </table>
+          {% else %}
+          <h3 style="color:cornsilk;">You have no bookings!</h3>
+          {% endif %}
+        </div>
+      </div>
 {% endblock %}

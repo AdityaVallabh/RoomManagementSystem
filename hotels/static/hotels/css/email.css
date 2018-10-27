@@ -1,10 +1,4 @@
-{% extends 'hotels/base.html' %}
-{% block title %}Contact{% endblock %}
-{% load staticfiles %}
-{% block body %}
-
-<style>
-  @import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600);
 
 * {
 	margin:0;
@@ -25,10 +19,10 @@ body {
 	font-size: 12px;
 	line-height:30px;
 	color:#777;
-	
+	background:#0CF;
 }
 
-.contain {
+.container {
 	max-width:400px;
 	width:100%;
 	margin:0 auto;
@@ -39,7 +33,7 @@ body {
 
 #contact {
 	background:#F9F9F9;
-	padding:50px;
+	padding:25px;
 	margin:50px 0;
 }
 
@@ -89,7 +83,7 @@ fieldset {
 	cursor:pointer;
 	width:100%;
 	border:none;
-	background:#FFC107;
+	background:#0CF;
 	color:#FFF;
 	margin:0 0 5px;
 	padding:10px;
@@ -121,48 +115,3 @@ fieldset {
 :-ms-input-placeholder {
  color:#888;
 }
-
-</style>
- 
-{% if success is True %}
-<center><h3>Mail Sent Successfully</h3></center>
-{% endif %}
-
-{% if not success %}
-<div class="contain">  
-  <form id="contact" method="post">
-    <h3>Contact</h3>
-    <h4>Didn't find your hotel?Ask admin to add it.</h4>
-    {% csrf_token %}
-
-      <input placeholder="Your name" type="text"  name="name" id="id_name" tabindex="1" required autofocus>
-
-      <input placeholder="Your Location" type="text" name="location" id="id_location" tabindex="2" required>
-
-      <input placeholder="Hotel Name" type="text" name="hotel_name" id="id_hotel_name" tabindex="3" required>
-
-      <input placeholder="Hotel Email" type="email" name="hotel_email" id="id_hotel_email"  tabindex="4" required>
-
-      <input placeholder="Email"  type="email" name="email" id="id_email"  tabindex="5" required>
-
-      <input placeholder="Contact"  type="tel" name="contact" id="id_contact"  tabindex="6" required>
-
-    <div class="form-actions">
-      <button type="submit" id="contact-submit">Submit</button>
-  </div>
-  </form>
- 
-  
-</div>
-<!--<h1>Didn't find your hotel?Ask admin to add it.</h1><br /><br />
-<h2>Contact Us</h2>
-<form method="post">
-    {% csrf_token %}
-    {% load crispy_forms_tags %}
-    {{ form|crispy }}
-    <div class="form-actions">
-      <center><button type="submit" class="button-three">Send Mail</button></center>
-    </div>
-</form> -->
-{% endif %}
-{% endblock %}

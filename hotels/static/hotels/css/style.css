@@ -135,13 +135,13 @@ banner
     background-color: rgba(12, 184, 182) !important;
 }
 #banner{
-    background: url('../images/slide1-01.jpg') no-repeat fixed;
+    background: url('../images/banner-bg-2.jpg') no-repeat fixed;
 	background-size: cover;
 	min-height: 800px;
 	position: relative;
 }
 .bg-color{
-	background-color: rgba(0, 0, 0, 0.6);
+	background-color: rgba(0, 0, 0 ,0.4);
 	min-height: 800px;
 }
 .banner-info{
@@ -606,6 +606,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: rgba(253, 138, 144, 0.4);
 }
 .book-module > .inner .top > .inner .logo-container .logo {
   font-size: 46px;

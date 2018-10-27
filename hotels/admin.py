@@ -4,7 +4,7 @@ from .models import Hotel, Room, Booking
 # Register your models here.
 @admin.register(Hotel)
 class HotelAdmin(admin.ModelAdmin):
-    list_display = ('name', 'location', 'address', 'contact', 'email', 'rating')
+    list_display = ('name', 'location', 'address', 'contact', 'email', 'rating', 'num_rating')
 
     def get_readonly_fields(self, request, obj=None):
         if request.user.is_superuser:
@@ -33,7 +33,8 @@ class RoomAdmin(admin.ModelAdmin):
         return qs.filter(hotel=request.user.manager.hotel)
 
     def save_model(self, request, obj, form, change):
-        obj.hotel = request.user.manager.hotel
+        if not obj.hotel_id:
+            obj.hotel = request.user.manager.hotel
         super(RoomAdmin, self).save_model(request, obj, form, change)
 
 @admin.register(Booking)

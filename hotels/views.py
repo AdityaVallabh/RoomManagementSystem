@@ -2,14 +2,14 @@ from django.shortcuts import render, redirect
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Hotel, Room ,Booking
+from .models import Hotel, Room, Booking, Transaction
 from .forms import BookingForm, ContactForm
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
-from RoomManagementSystem.emails import BOOKING_EMAIL
-import dateutil.parser
+from RoomManagementSystem.emails import CONTACT_EMAIL
 from accounts.models import User
 from django.core.mail import EmailMessage
+from django.utils import timezone
 
 # Create your views here.
 
@@ -22,6 +22,8 @@ def search(request):
 
     return render(request, 'hotels/search.html', {'locations': locations})
 
+def about(request):
+    return render(request, 'hotels/about.html')
 
 def emailView(request):
     if request.method == 'GET':
@@ -35,23 +37,8 @@ def emailView(request):
             hotel_email = form.cleaned_data['hotel_email']
             email = form.cleaned_data['email']
             contact = form.cleaned_data['contact']
-            subject = name + ' wants to add ' + hotel_name + ' (' + location + ')'
-            message ="""
-Greetings Admin!
-A request has been recieved to add a new hotel to the database:-
-
-Hotel Name: %s
-Location: %s
-Hotels Email ID: %s
-Requested By: %s
-Users Email ID: %s
-Contact Number: %s
-
-
-
-Regards,
-Team HBS.
-""" % (hotel_name,location,hotel_email,name,email,contact)
+            subject = '[YOYO] ' + name + ' wants to add ' + hotel_name + ' (' + location + ')'
+            message = CONTACT_EMAIL % (hotel_name,location,hotel_email,name,email,contact)
             admin_email = User.objects.get(pk=1).email
             success = False
             try:
@@ -69,15 +56,6 @@ class BookingCreate(CreateView):
     form_class = BookingForm
     template_name = 'hotels/booking.html'
     room = None
-
-    # def send_email(self, transaction):
-    #     try:
-    #         subject = "Invoice for Transaction %d" % transaction.id
-    #         body = BOOKING_EMAIL % (transaction.from_user.first_name, transaction.from_user.last_name, transaction.id, transaction.from_user.username, transaction.to_user.username, transaction.amount, transaction.time, transaction.success)
-    #         email = EmailMessage(subject, body, to=[transaction.from_user.email])
-    #         email.send()
-    #     except:
-    #         print("Unable to send email (%s)" % transaction.from_user.email)
 
     def get_initial(self):
         if self.request.GET.get('room_id') and Room.objects.filter(id=self.request.GET['room_id']):
@@ -107,15 +85,14 @@ class BookingCreate(CreateView):
         message, success = self.check_availability(booking.room, booking.begin_time, booking.end_time, booking.num_rooms)
         if(not success):
             return render(self.request, 'hotels/booking.html', {'room': booking.room, 'message': message})
-        # transaction = Transaction()
-        # transaction, success = transaction.make_transaction(from_user=self.request.user.userprofile, to_user=booking.room, amount=booking.fee, reason="Book Booking")
-        # if success:
-        #     booking.transaction_id = transaction
-        #     booking.save()
-        # else:
-        #     print('Transaction %d failed' % transaction.id)
-        # self.send_email(transaction)
-        booking.save()
+        transaction = Transaction()
+        transaction, success = transaction.make_transaction(from_user=self.request.user.customer, to_hotel=booking.room.hotel, amount=booking.amount, reason="Room Booking")
+        if success:
+            booking.transaction = transaction
+            booking.save()
+        else:
+            print('Transaction %d failed' % transaction.id)
+            return render(self.request, 'hotels/booking.html', {'room': booking.room, 'message': 'Transaction Failed'})
         return redirect('index')
 
 
@@ -142,7 +119,6 @@ class RoomDetail(DetailView):
     model = Room
     template_name='hotels/room_detail.html'
 
-
 class BookingList(ListView):
     template_name = 'hotels/booking-list.html'
     context_object_name = 'bookings'
@@ -153,6 +129,25 @@ class BookingList(ListView):
         elif self.request.user.is_authenticated:
             if self.request.user.is_customer:
                 return Booking.objects.filter(customer=self.request.user)
+
 class BookingDetail(DetailView):
     model = Booking
     template_name = 'hotels/booking-details.html'
+
+    def post(self, request, *args, **kwargs):
+        if request.POST.get('rating'):
+            user_rating = int(request.POST.get('rating'))
+            self.object = super(BookingDetail, self).get_object()
+            hotel = self.object.room.hotel
+            if self.object.user_rating == 0:
+                hotel.rating = (hotel.rating * hotel.num_rating + user_rating)/(hotel.num_rating + 1)
+                hotel.num_rating += 1
+            else:
+                hotel.rating = (hotel.rating * hotel.num_rating - self.object.user_rating + user_rating)/(hotel.num_rating)
+            hotel.save()
+            self.object.user_rating = user_rating
+            self.object.save()
+            print(self.object.user_rating)
+            return redirect('index')
+        return self.get(request)
+            

@@ -2,7 +2,54 @@
 {% block title %}Home{% endblock %}
 {% load staticfiles %}
 {% block body %}
-<div class="row" style="width: 100%">
+<style>
+    .page-hero {
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.page-hero h1 {
+    animation:
+        slideUp 0.75s .5s cubic-bezier(0.17,.88,.32,1.27) both,
+        fadeIn .25s .5s ease-in both;
+    padding: 0 20px;
+    position: absolute;
+    text-align: center;
+
+    text-shadow: 3px 3px 7px rgba(244, 67, 54, 0.12);
+    top: 50%;
+    width: 100%;
+}
+.page-hero h3 {
+    animation:
+        slideUp 0.75s .5s cubic-bezier(0.17,.88,.32,1.27) both,
+        fadeIn .25s .5s ease-in both;
+    padding: 0 0px;
+    position: absolute;
+    text-align: center;
+
+    text-shadow: 3px 3px 7px rgba(244, 67, 54, 0.42);
+    top: 80%;
+    width: 100%;
+}
+
+@keyframes slideUp {
+    from {transform: translateY(200%);}
+    to {transform:translateY(-50%);}
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+</style>
+<div class="page-hero">
+        <h1 style="color:blanchedalmond;font-size: 85px;font-weight: 70">Welcome to</h1>
+        <h3 style="color:rgb(233, 233, 196);font-size: 70px;font-weight: 100">Hotel Booking System</h3>
+      </div>
+<!-- <div class="row" style="width: 100%">
         <div style="align-content: center;width:100%;padding-left: 5%;padding-right: 0%">
 <center><h3 style="color:blanchedalmond;font-size:40px;align-content: center;padding-left: 25%;padding-right: 25%"><br />
     Welcome to
@@ -13,5 +60,5 @@
 </span></center>
 
 </div>
-</div>
+</div> -->
 {% endblock %}

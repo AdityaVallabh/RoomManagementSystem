@@ -24,6 +24,7 @@ class Customer(models.Model):
     """Model definition for Customer."""
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    wallet = models.IntegerField(default = 10000)
 
     def __str__(self):
         """Unicode representation of Customer."""
