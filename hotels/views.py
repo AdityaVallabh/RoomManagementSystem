@@ -84,7 +84,7 @@ class BookingCreate(CreateView):
         booking.amount = booking.num_rooms * booking.room.cost * (booking.end_time - booking.begin_time).days
         message, success = self.check_availability(booking.room, booking.begin_time, booking.end_time, booking.num_rooms)
         if(not success):
-            return render(self.request, 'hotels/booking.html', {'room': booking.room, 'message': message})
+            return render(self.request, 'hotels/booking.html', {'form': self.get_form(), 'room': booking.room, 'message': message})
         transaction = Transaction()
         transaction, success = transaction.make_transaction(from_user=self.request.user.customer, to_hotel=booking.room.hotel, amount=booking.amount, reason="Room Booking")
         if success:
@@ -92,7 +92,7 @@ class BookingCreate(CreateView):
             booking.save()
         else:
             print('Transaction %d failed' % transaction.id)
-            return render(self.request, 'hotels/booking.html', {'room': booking.room, 'message': 'Transaction Failed'})
+            return render(self.request, 'hotels/booking.html', {'form': self.get_form(), 'room': booking.room, 'message': 'Insufficient Funds'})
         return redirect('index')
 
 
@@ -147,7 +147,6 @@ class BookingDetail(DetailView):
             hotel.save()
             self.object.user_rating = user_rating
             self.object.save()
-            print(self.object.user_rating)
             return redirect('index')
         return self.get(request)
             

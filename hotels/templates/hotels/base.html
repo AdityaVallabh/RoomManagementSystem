@@ -41,10 +41,16 @@
 							<div class="wrap_menu p-l-45 p-l-0-xl">
 								<nav class="menu">
 									<ul class="main_menu">
+										{% if request.user.is_customer %}
+										<li>
+											<a href="">₹{{ request.user.customer.wallet }}</a>
+										</li>
+										{% endif %}
+
 										<li>
 											<a href="{% url 'index' %}">Home</a>
 										</li>
-		
+
 										<li>
 											<a href="{% url 'hotels:search' %}">Search</a>
 										</li>

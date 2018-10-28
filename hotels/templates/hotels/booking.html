@@ -304,16 +304,16 @@ label {
         <form method="POST" enctype="multipart/form-data">
           {% csrf_token %}
           {% if message %}
-          {{ message }}
+          <h3>{{ message }}</h3>
           {% endif %}
           <div class="location">
             {{ form.room|as_crispy_field }}
           </div>
           <div class="guests">
             <label for="guests">NUMBER OF ROOMS</label><br/><br/>
-            <button class="counter-btn" type="button" id="cnt-down">-</button>
-            <input id="id_num_rooms" name="num_rooms" type="text" name="num_rooms" value="2" required/>
             <button class="counter-btn" type="button" id="cnt-up">+</button>
+            <input id="id_num_rooms" name="num_rooms" type="text" name="num_rooms" value="2" required/>
+            <button class="counter-btn" type="button" id="cnt-down">-</button>
           </div>
           <script>
             $(document).ready(function() {
@@ -379,7 +379,7 @@ label {
                 function confirm_appointment(e) {
                   var amount = $("#id_num_rooms").val() * {{ price }};
                   console.log(amount);
-                  msg = "Are you sure you want to book " + $("#id_num_rooms").val() + " rooms for Rs." + amount;// $("#id_room option:selected").text();
+                  msg = "Are you sure you want to book " + $("#id_num_rooms").val() + " rooms for Rs." + amount + " per day?";// $("#id_room option:selected").text();
                   if(!confirm(msg)) {
                       e.preventDefault();
                   }
