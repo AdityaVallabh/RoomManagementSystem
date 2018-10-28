@@ -28,7 +28,7 @@ SECRET_KEY = '@a&c^l1hs1i_#g_m%nwwyp7&ovq0th!^04d3de(^$ydk3^6i4_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['room-booking-system-proj.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['hotel-booking-sys.herokuapp.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
